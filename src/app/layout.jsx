@@ -1,4 +1,5 @@
 import localFont from "next/font/local";
+import Script from "next/script";
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -24,13 +25,21 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" data-theme="night">
       <head>
-        <AdSense />
+        <Script
+          type="text/javascript"
+          src="//rethinkexercisesupplement.com/c2/55/92/c2559216e4f57bbe5ebe8069840e93f6.js"
+        ></Script>
+        <Script
+          type="text/javascript"
+          src="//rethinkexercisesupplement.com/12/8a/b1/128ab153ef23b41d044abb7da2bea9cf.js"
+        ></Script>
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Header />
         {children}
+
         <Footer />
       </body>
     </html>
