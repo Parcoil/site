@@ -1,12 +1,12 @@
 import Link from "next/link";
 import React from "react";
-
+import Image from "next/image";
 function Header() {
   return (
     <div className="navbar bg-base-100 shadow-lg">
       <div className="flex-1">
         <Link href="/" className="btn btn-ghost normal-case text-xl">
-          <img src="assets/Parcoil2.png" width="30px" />
+          <Image src="/assets/Parcoil2.png" width="30" height={30} />
           <p>Parcoil</p>
         </Link>
       </div>
