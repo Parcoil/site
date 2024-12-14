@@ -1,4 +1,5 @@
 "use client";
+import Autotag from "@/app/components/Ad";
 import React, { useState } from "react";
 export default function PasswordGenerator() {
   const [password, setPassword] = useState("");
@@ -30,6 +31,7 @@ export default function PasswordGenerator() {
 
   return (
     <div className="flex flex-col items-center py-6 px-4 bg-base-200 rounded-lg shadow-lg max-w-lg mx-auto mt-10">
+      <Autotag />
       <h1 className="text-3xl font-semibold mb-6 text-primary">
         Password Generator
       </h1>

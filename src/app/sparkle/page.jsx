@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import Autotag from "../components/Ad";
 
 function Page() {
   const features = [
@@ -17,6 +18,7 @@ function Page() {
 
   return (
     <>
+      <Autotag />
       <div
         role="alert"
         className="alert alert-warning fixed sm:top-[100px] left-1/2 transform -translate-x-1/2 w-[90%] max-w-4xl flex items-center space-x-4 p-4 z-50"

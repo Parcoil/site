@@ -1,12 +1,14 @@
 import Image from "next/image";
 import Script from "next/script";
 import React from "react";
+import Autotag from "./components/Ad";
 
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center p-5 bg-base-200">
       <header className="text-center mb-10">
         <div className="flex justify-center items-center mb-4">
+          <Autotag />
           <Image
             src="/assets/parcoil2.png"
             alt="Parcoil Logo"

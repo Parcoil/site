@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { FaGithub } from "react-icons/fa";
+import Autotag from "../components/Ad";
 
 function Page() {
   const projects = [
@@ -32,6 +33,7 @@ function Page() {
 
   return (
     <div className="min-h-[100dvh] bg-base-200 p-5 flex flex-col justify-center items-center">
+      <Autotag />
       <h1 className="text-4xl font-bold text-primary mb-10">Projects</h1>
       <div className="grid gap-6 w-full max-w-4xl">
         {projects.map((project, index) => (
