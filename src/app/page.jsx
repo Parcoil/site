@@ -1,24 +1,27 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
-const ParcoilHomepage = () => {
+export const metadata = {
+  title: "Home | Parcoil",
+};
+
+function Page() {
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Hero Section */}
       <main className="flex-grow flex flex-col items-center justify-center text-center px-4">
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-5xl font-extrabold text-white mb-6">
+          <h1 className="text-5xl font-extrabold dark:text-white mb-6">
             Welcome to Parcoil
           </h1>
-          <p className="text-xl text-blue-200 mb-8">someting</p>
-
+          <p className="text-xl dark:text-blue-200 mb-8">someting</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-6 text-lg">
+            <Button className="" size="lg">
               Bring me to Projects
             </Button>
-            <Button className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-6 text-lg">
-              Bring me to Tools
-            </Button>
+            <Link href="/tools">
+              <Button className="">Bring me to Tools</Button>
+            </Link>
           </div>
         </div>
       </main>
@@ -26,6 +29,6 @@ const ParcoilHomepage = () => {
       {/* Footer */}
     </div>
   );
-};
+}
 
-export default ParcoilHomepage;
+export default Page;

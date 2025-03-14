@@ -1,38 +1,31 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { ThemeProvider } from "next-themes";
 import Footer from "@/components/Footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata = {
   title: "Parcoil",
-  description: "Parcoil Website",
+  description:
+    "Creators of Lunaar and Starlight unblocked games, and Sparkle Windows optimizer. ",
+  keywords:
+    "Parcoil, Lunaar, Starlight, Sparkle, Windows optimizer, unblocked games, open source, optimizer, windows tweaks, windows tweaker, vtrl, hone",
+  robots: "index, follow",
 };
-
-export default function RootLayout({ children }) {
+const inter = Inter({ subsets: ["latin"] });
+export default function RootLayout({ children, hideNavbar = false }) {
   return (
     <html lang="en">
-      <link rel="icon" href="/favicon.ico" sizes="any" />
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <link rel="icon" href="/parcoil.png" sizes="any" />
+
+      <body className={`${inter.className} antialiased`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <Navbar />
+          {!hideNavbar && <Navbar />}
           {children}
           <Footer />
         </ThemeProvider>
