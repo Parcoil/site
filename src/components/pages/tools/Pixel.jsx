@@ -17,39 +17,32 @@ function Pixel() {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [testStarted, setTestStarted] = useState(false);
 
-  // Function to enter fullscreen
   const enterFullScreen = () => {
     const elem = document.documentElement;
 
     if (elem.requestFullscreen) {
       elem.requestFullscreen();
     } else if (elem.webkitRequestFullscreen) {
-      /* Safari */
       elem.webkitRequestFullscreen();
     } else if (elem.msRequestFullscreen) {
-      /* IE11 */
       elem.msRequestFullscreen();
     }
 
     setIsFullScreen(true);
   };
 
-  // Function to exit fullscreen
   const exitFullScreen = () => {
     if (document.exitFullscreen) {
       document.exitFullscreen();
     } else if (document.webkitExitFullscreen) {
-      /* Safari */
       document.webkitExitFullscreen();
     } else if (document.msExitFullscreen) {
-      /* IE11 */
       document.msExitFullscreen();
     }
 
     setIsFullScreen(false);
   };
 
-  // Start the test
   const startTest = () => {
     setTestStarted(true);
     setCurrentColorIndex(0);
@@ -59,7 +52,6 @@ function Pixel() {
     }
   };
 
-  // Handle left click (forward)
   const handleLeftClick = () => {
     if (!testStarted) return;
 
@@ -68,16 +60,14 @@ function Pixel() {
     setCurrentColorIndex(nextIndex);
   };
 
-  // Handle right click (backward)
   const handleRightClick = (e) => {
-    e.preventDefault(); // Prevent context menu
+    e.preventDefault();
     if (!testStarted || previousColorIndex === -1) return;
 
     setCurrentColorIndex(previousColorIndex);
     setPreviousColorIndex(-1);
   };
 
-  // Handle key presses
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Escape" && testStarted) {
@@ -98,7 +88,6 @@ function Pixel() {
     };
   }, [testStarted, isFullScreen, currentColorIndex, previousColorIndex]);
 
-  // Handle fullscreen changes
   useEffect(() => {
     const handleFullScreenChange = () => {
       setIsFullScreen(
@@ -125,7 +114,6 @@ function Pixel() {
     };
   }, []);
 
-  // Reset the test if fullscreen is exited
   useEffect(() => {
     if (!isFullScreen && testStarted) {
       setTestStarted(false);

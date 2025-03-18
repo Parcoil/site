@@ -91,7 +91,7 @@ function Navbar() {
                           </p>
                         </a>
                       </li>
-                      <li>
+                      {/* <li>
                         <a
                           href="/tools/packages"
                           className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
@@ -104,7 +104,7 @@ function Navbar() {
                             Reusable code libraries and components
                           </p>
                         </a>
-                      </li>
+                      </li> */}
                     </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
@@ -113,21 +113,17 @@ function Navbar() {
                     <a href="/sparkle">✨ Sparkle</a>
                   </Button>
                 </NavigationMenuItem>
-                <NavigationMenuItem>
+                {/* <NavigationMenuItem>
                   <Button variant="ghost" asChild>
                     <a href="/about">About</a>
                   </Button>
-                </NavigationMenuItem>
+                </NavigationMenuItem> */}
               </NavigationMenuList>
             </NavigationMenu>
           </div>
 
           <div className="ml-auto flex items-center space-x-4">
-            <Button
-              variant="outline"
-              size="sm"
-              className="hidden md:inline-flex"
-            >
+            <Button variant="outline" className="hidden md:inline-flex">
               <a
                 href="https://github.com/Parcoil"
                 target="_blank"
@@ -212,10 +208,10 @@ function Navbar() {
                   className="w-full justify-start"
                   asChild
                 >
-                  <a href="/tools/packages" className="flex items-center">
+                  {/* <a href="/tools/packages" className="flex items-center">
                     <Package className="h-4 w-4 mr-2" />
                     Packages
-                  </a>
+                  </a> */}
                 </Button>
               </div>
             </div>
@@ -223,9 +219,9 @@ function Navbar() {
             <Button variant="ghost" className="w-full justify-start" asChild>
               <a href="/sparkle">Sparkle</a>
             </Button>
-            <Button variant="ghost" className="w-full justify-start" asChild>
+            {/* <Button variant="ghost" className="w-full justify-start" asChild>
               <a href="/about">About</a>
-            </Button>
+            </Button> */}
             <Button variant="outline" className="w-full justify-start" asChild>
               <a
                 href="https://github.com/parcoil"

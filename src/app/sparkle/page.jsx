@@ -57,24 +57,23 @@ export default function Page() {
       description:
         "Optimize system settings to increase FPS in games and applications.",
     },
-    {
-      icon: <Settings className="text-blue-500" />,
-      title: "System Optimization",
-      description:
-        "Fine-tune Windows settings for maximum efficiency and speed.",
-    },
-    {
-      icon: <Shield className="text-green-500" />,
-      title: "Privacy Protection",
-      description:
-        "Disable telemetry and enhance privacy settings automatically.",
-    },
+    // {
+    //   icon: <Settings className="text-blue-500" />,
+    //   title: "System Optimization",
+    //   description:
+    //     "Fine-tune Windows settings for maximum efficiency and speed.",
+    // },
+    // {
+    //   icon: <Shield className="text-green-500" />,
+    //   title: "Privacy Protection",
+    //   description:
+    //     "Disable telemetry and enhance privacy settings automatically.",
+    // },
   ];
 
   return (
     <div className="min-h-screen   text-white">
       <div className="container mx-auto px-4 py-12 max-w-5xl">
-        {/* Alert Banner */}
         <Card className="bg-yellow-500 mb-12 border-none ">
           <CardContent className="flex items-center justify-center p-4 text-black">
             <AlertCircle className="mr-2 h-5 w-5 flex-shrink-0" />
@@ -85,7 +84,6 @@ export default function Page() {
           </CardContent>
         </Card>
 
-        {/* Hero Section */}
         <div className="text-center mb-16">
           <h1 className="text-6xl md:text-8xl mb-4">✨</h1>
           <h1 className="text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-yellow-200 to-yellow-500 bg-clip-text text-transparent">
@@ -117,7 +115,6 @@ export default function Page() {
           </div>
         </div>
 
-        {/* Features Section */}
         <div className="mb-16">
           <div className="text-center mb-8">
             <h2 className="text-3xl md:text-4xl font-bold text-yellow-400 mb-2">

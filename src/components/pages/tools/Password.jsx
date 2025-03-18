@@ -83,18 +83,46 @@ export default function PasswordGenerator() {
   };
 
   const calculatePasswordStrength = () => {
-    let strength = 0;
+    if (!password) return "Weak";
 
-    if (length > 8) strength += 1;
-    if (length > 12) strength += 1;
-    if (length > 16) strength += 1;
+    let poolSize = 26;
+    if (hasUppercase) poolSize += 26;
+    if (hasNumbers) poolSize += 10;
+    if (hasSymbols) poolSize += 16;
 
-    if (hasUppercase) strength += 1;
-    if (hasNumbers) strength += 1;
-    if (hasSymbols) strength += 1;
+    const entropy = Math.log2(poolSize) * password.length;
 
-    if (strength <= 2) return "Weak";
-    if (strength <= 4) return "Medium";
+    let deductions = 0;
+
+    const charCounts = {};
+    for (const char of password) {
+      charCounts[char] = (charCounts[char] || 0) + 1;
+    }
+
+    Object.values(charCounts).forEach((count) => {
+      if (count > 2) deductions += count - 2;
+    });
+
+    for (let i = 0; i < password.length - 2; i++) {
+      const charCode1 = password.charCodeAt(i);
+      const charCode2 = password.charCodeAt(i + 1);
+      const charCode3 = password.charCodeAt(i + 2);
+
+      if (
+        (charCode1 + 1 === charCode2 && charCode2 + 1 === charCode3) ||
+        (charCode1 - 1 === charCode2 && charCode2 - 1 === charCode3)
+      ) {
+        deductions += 2;
+      }
+    }
+
+    const adjustedEntropy = Math.max(
+      entropy * (1 - Math.min(deductions / password.length / 3, 0.3)),
+      0
+    );
+
+    if (adjustedEntropy < 28) return "Weak";
+    if (adjustedEntropy < 60) return "Medium";
     return "Strong";
   };
 
