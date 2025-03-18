@@ -1,89 +1,150 @@
-import Link from "next/link";
 import React from "react";
-import Autotag from "../components/Ad";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  AlertCircle,
+  Download,
+  Github,
+  Trash2,
+  Zap,
+  Settings,
+  Shield,
+} from "lucide-react";
 
-function Page() {
+export const metadata = {
+  title: "Sparkle | Windows Optimization Tool by Parcoil",
+  description:
+    "Sparkle is a free, open-source Windows optimization tool that helps debloat your system, boost FPS in games, and improve overall performance with one-click solutions.",
+  keywords:
+    "Sparkle, Windows optimizer, debloat Windows, boost FPS, system optimization, Parcoil, Windows performance, gaming performance",
+  openGraph: {
+    title: "Sparkle | Windows Optimization Tool",
+    description:
+      "Optimize your Windows PC, remove bloatware, and boost gaming performance with this free open-source tool.",
+    type: "website",
+    url: "https://parcoil.com/sparkle",
+    images: [
+      {
+        url: "/sparkleimage.png", // Replace with actual image path
+        width: 1200,
+        height: 630,
+        alt: "Sparkle Windows Optimization Tool",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Sparkle - Windows Optimization Made Easy",
+    description:
+      "Boost your PC performance with Sparkle, the free Windows optimization tool from Parcoil",
+    images: ["/sparkleimage.png"],
+  },
+  canonical: "https://parcoil.com/sparkle",
+};
+
+export default function Page() {
   const features = [
     {
-      title: "Clean Temp",
+      icon: <Trash2 className="text-red-500" />,
+      title: "Debloat Windows",
       description:
-        "Instantly free up space and speed up your PC with Sparkle's one-click cleanup feature.",
+        "Remove unnecessary applications and services with one click!",
     },
     {
-      title: "View Ram usage",
+      icon: <Zap className="text-yellow-500" />,
+      title: "Boost Performance",
       description:
-        "Monitor CPU, RAM, and other performance metrics in real-time.",
+        "Optimize system settings to increase FPS in games and applications.",
     },
+    // {
+    //   icon: <Settings className="text-blue-500" />,
+    //   title: "System Optimization",
+    //   description:
+    //     "Fine-tune Windows settings for maximum efficiency and speed.",
+    // },
+    // {
+    //   icon: <Shield className="text-green-500" />,
+    //   title: "Privacy Protection",
+    //   description:
+    //     "Disable telemetry and enhance privacy settings automatically.",
+    // },
   ];
 
   return (
-    <>
-      <Autotag />
-      <div
-        role="alert"
-        className="alert alert-warning fixed sm:top-[100px] left-1/2 transform -translate-x-1/2 w-[90%] max-w-4xl flex items-center space-x-4 p-4 z-50"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6 shrink-0 stroke-current"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-          />
-        </svg>
-        <span>
-          Sparkle is out of date and has not been updated. A new version is
-          coming soon!
-        </span>
-      </div>
+    <div className="min-h-screen   text-white">
+      <div className="container mx-auto px-4 py-12 max-w-5xl">
+        <Card className="bg-yellow-500 mb-12 border-none ">
+          <CardContent className="flex items-center justify-center p-4 text-black">
+            <AlertCircle className="mr-2 h-5 w-5 flex-shrink-0" />
+            <p className="text-sm md:text-base">
+              This version of Sparkle has not been updated in 1+ years. A new
+              version is currently in development.
+            </p>
+          </CardContent>
+        </Card>
 
-      <div className="min-h-[100dvh] p-5 flex flex-col justify-center items-center text-center">
-        <div>
-          <h1 className="text-9xl animate-pulse">✨</h1>
-          <h1 className="text-5xl font-bold text-primary mt-5">Sparkle</h1>
-          <p className="text-lg mt-3 text-base-content">
-            The Finest Windows Optimizer
+        <div className="text-center mb-16">
+          <h1 className="text-6xl md:text-8xl mb-4">✨</h1>
+          <h1 className="text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-yellow-200 to-yellow-500 bg-clip-text text-transparent">
+            Sparkle
+          </h1>
+          <p className="text-lg md:text-xl text-black dark:text-gray-300 mb-8">
+            The ultimate tool to optimize Windows, remove bloatware, and boost
+            gaming performance
           </p>
-        </div>
 
-        <div className="mt-10 max-w-3xl">
-          <h2 className="text-3xl font-semibold text-secondary mb-6">
-            Key Features
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {features.map((feature, index) => (
-              <div key={index} className="card bg-neutral shadow-lg p-5">
-                <h3 className="text-xl font-bold text-primary">
-                  {feature.title}
-                </h3>
-                <p className="mt-2 text-base-content">{feature.description}</p>
-              </div>
-            ))}
+          <div className="flex flex-wrap gap-4 justify-center mb-12">
+            <Link href="https://github.com/Parcoil/Sparkle/releases/latest">
+              <Button
+                size="lg"
+                className="bg-yellow-500 hover:bg-yellow-600 text-black"
+              >
+                <Download className="mr-2 h-5 w-5" /> Download Latest
+              </Button>
+            </Link>
+            <Link href="https://github.com/Parcoil/Sparkle">
+              <Button
+                variant="outline"
+                size="lg"
+                className="border-yellow-500 text-yellow-500 hover:bg-yellow-500/10"
+              >
+                <Github className="mr-2 h-5 w-5" /> View on GitHub
+              </Button>
+            </Link>
           </div>
         </div>
 
-        <div className="mt-10 gap-5 flex">
-          <Link
-            href="https://github.com/Parcoil/Sparkle/releases/latest"
-            className="btn btn-primary btn-lg px-8 py-4 shadow-lg"
-          >
-            Download Sparkle
-          </Link>
-          <Link
-            href="https://github.com/Parcoil/Sparkle"
-            className="btn btn-secondary btn-lg px-8 py-4 shadow-lg"
-          >
-            View on GitHub
-          </Link>
+        <div className="mb-16">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl md:text-4xl font-bold text-yellow-400 mb-2">
+              Features
+            </h2>
+            <p className="text-black dark:text-gray-400">
+              Current capabilities in version v1
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {features.map((feature, index) => (
+              <Card
+                key={index}
+                className="dark:bg-gray-800 dark:border-gray-700 hover:border-yellow-500 transition-all duration-300"
+              >
+                <CardHeader className="pb-2">
+                  <div className="flex items-center gap-3">
+                    {feature.icon}
+                    <CardTitle className="text-xl">{feature.title}</CardTitle>
+                  </div>
+                </CardHeader>
+                <CardContent className="dark:text-gray-300">
+                  {feature.description}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
-
-export default Page;

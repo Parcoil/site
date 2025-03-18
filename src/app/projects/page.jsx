@@ -1,62 +1,103 @@
 import React from "react";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardFooter,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Github } from "lucide-react";
+import { Globe } from "lucide-react";
 import Link from "next/link";
-import { FaGithub } from "react-icons/fa";
-import Autotag from "../components/Ad";
+import { Download } from "lucide-react";
 
-function Page() {
+export const metadata = {
+  title: "Projects | Parcoil",
+};
+
+function page() {
   const projects = [
     {
       name: "Cloakjs",
       description: "A JavaScript tab cloak library.",
-      url: "https://github.com/Parcoil/Cloak",
+      repo: "https://github.com/Parcoil/Cloak",
       image: "🔍",
     },
     {
       name: "Lunaar.org",
       description: "An unblocked games website.",
-      url: "https://github.com/Parcoil/lunaar.org",
+      repo: "https://github.com/Parcoil/lunaar.org",
       image: "🌙",
+      site: "https://lunaar.org",
     },
     {
       name: "Starlight",
       description: "Another unblocked games site.",
-      url: "https://github.com/Parcoil/starlight",
-      image: "✨",
+      repo: "https://github.com/Parcoil/starlight",
+      image: "💫",
+      site: "https://gostarlight.xyz",
     },
     {
       name: "Sparkle",
       description: "A Windows toolbox for optimization.",
-      url: "https://github.com/Parcoil/Sparkle",
-      image: "💻",
+      repo: "https://github.com/Parcoil/Sparkle",
+      download: "/sparkle",
+      image: "✨",
     },
   ];
-
   return (
-    <div className="min-h-[100dvh] bg-base-200 p-5 flex flex-col justify-center items-center">
-      <Autotag />
-      <h1 className="text-4xl font-bold text-primary mb-10">Projects</h1>
-      <div className="grid gap-6 w-full max-w-4xl">
-        {projects.map((project, index) => (
-          <Link
-            key={index}
-            href={project.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="card bg-base-100 shadow-lg p-6 transform transition-transform duration-300 ease-in-out hover:scale-105 hover:-translate-y-2"
-          >
-            <div className="flex items-center justify-between">
-              <span className="text-4xl">{project.image}</span>
-              <FaGithub className="text-2xl text-primary ml-4" />
-            </div>
-            <h2 className="text-2xl font-semibold text-secondary mt-3">
-              {project.name}
-            </h2>
-            <p className="text-base-content mt-3">{project.description}</p>
-          </Link>
+    <div className="min-h-screen">
+      <h1 className="text-4xl text-center m-5 font-bold">Projects</h1>
+      <div className="m-8 gap-4 flex justify-center flex-wrap">
+        {projects.map((project) => (
+          <Card className="min-w-[400px]">
+            <CardHeader>
+              <div className="flex gap-1">
+                <p className="text-xl">{project.image}</p>
+                <h1 className="text-xl">{project.name}</h1>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p>{project.description}</p>
+            </CardContent>
+
+            <CardFooter className="flex gap-4">
+              {project.repo && (
+                <Link href={project.repo}>
+                  <Button variant="secondary" asChild>
+                    <div>
+                      <Github />
+                      Visit Github Repo
+                    </div>
+                  </Button>
+                </Link>
+              )}
+              {project.site && (
+                <Link href={project.site}>
+                  <Button variant="outline" asChild>
+                    <div>
+                      <Globe />
+                      Visit Site
+                    </div>
+                  </Button>
+                </Link>
+              )}
+              {project.download && (
+                <Link href={project.download}>
+                  <Button asChild>
+                    <div>
+                      <Download />
+                      Download
+                    </div>
+                  </Button>
+                </Link>
+              )}
+            </CardFooter>
+          </Card>
         ))}
       </div>
     </div>
   );
 }
 
-export default Page;
+export default page;
