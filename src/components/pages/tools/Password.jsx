@@ -202,7 +202,7 @@ export default function PasswordGenerator() {
           </div>
         </div>
 
-        <div className="p-4 bg-gray-50 dark:bg-gray-900 rounded-md">
+        <div className="p-4 bg-gray-50 dark:bg-secondary rounded-md">
           <div className="flex justify-between items-center mb-2">
             <Label className="flex items-center">
               <Shield className="h-4 w-4 mr-2" />
