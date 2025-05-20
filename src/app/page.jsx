@@ -9,7 +9,7 @@ export const metadata = {
 
 function Page() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="h-[89vh] flex flex-col">
       <main className="flex-grow flex flex-col items-center justify-center text-center px-4">
         <div className="max-w-3xl mx-auto">
           <div className="items-center justify-center flex">

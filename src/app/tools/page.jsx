@@ -5,6 +5,7 @@ import {
   CardDescription,
   CardHeader,
 } from "@/components/ui/card";
+import { Globe } from "lucide-react";
 import { LockKeyhole } from "lucide-react";
 import { File } from "lucide-react";
 import Link from "next/link";
@@ -24,8 +25,13 @@ function page() {
       name: "Password Generator",
       description: "Generate a random password",
       link: "/tools/password-generator",
-
       icon: <LockKeyhole size={28} className="" />,
+    },
+    {
+      name: "IP Info",
+      description: "Shows you IP related info",
+      link: "/tools/ip",
+      icon: <Globe size={28} className="" />,
     },
   ];
 
@@ -38,7 +44,7 @@ function page() {
             return (
               <Card
                 key={tool.name}
-                className="flex flex-col items-center justify-center m-5 p-5 max-w-7xl "
+                className="flex flex-col items-center justify-center m-5 p-5  min-w-[400px] max-w-[400px]"
               >
                 <CardHeader>
                   <div className="justify-center items-center flex">

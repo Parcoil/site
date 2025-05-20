@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { ThemeProvider } from "next-themes";
 import Footer from "@/components/Footer";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata = {
   title: "Parcoil",
@@ -25,6 +26,7 @@ export default function RootLayout({ children, hideNavbar = false }) {
           enableSystem
           disableTransitionOnChange
         >
+          <Toaster />
           {!hideNavbar && <Navbar />}
           {children}
           <Footer />

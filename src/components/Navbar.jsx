@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import Link from "next/link";
 import { File } from "lucide-react";
+import { Globe } from "lucide-react";
 
 function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -88,6 +89,20 @@ function Navbar() {
                           </div>
                           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                             Simple Base64 tool
+                          </p>
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="/tools/ip"
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        >
+                          <div className="text-sm font-medium leading-none flex items-center">
+                            <Globe className="h-4 w-4 mr-2" />
+                            IP Info
+                          </div>
+                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                            Simple IP Tool
                           </p>
                         </a>
                       </li>
@@ -201,6 +216,16 @@ function Navbar() {
                   <a href="/tools/base64" className="flex items-center">
                     <File className="h-4 w-4 mr-2" />
                     Base64 Tools
+                  </a>
+                </Button>
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start"
+                  asChild
+                >
+                  <a href="/tools/ip" className="flex items-center">
+                    <Globe className="h-4 w-4 mr-2" />
+                    IP info
                   </a>
                 </Button>
                 <Button

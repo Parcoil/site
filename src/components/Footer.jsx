@@ -1,26 +1,17 @@
 import React from "react";
 
 function Footer() {
-  const getYear = new Date().getFullYear();
+  const year = new Date().getFullYear();
+
   return (
-    <footer className="py-6 w-full bg-zinc-200 dark:bg-gray-900 mt-auto">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col  justify-between items-center">
-          <div className=" text-black dark:text-blue-200 mb-4 md:mb-0 text-center flex justify-center">
-            © {getYear} Parcoil. All rights reserved.
-          </div>
-          {/* <div className="flex space-x-6">
-            <a href="#" className="text-blue-200 hover:text-white">
-              Terms
-            </a>
-            <a href="#" className="text-blue-200 hover:text-white">
-              Privacy
-            </a>
-            <a href="#" className="text-blue-200 hover:text-white">
-              Support
-            </a>
-          </div> */}
-        </div>
+    <footer className="w-full bg-card dark:text-gray-300">
+      <div className="max-w-screen-xl mx-auto px-4 py-3 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <p className="text-sm text-center ">
+          a parcoil site.{" "}
+          <a href="mailto:info@parcoil.com" className="text-primary">
+            info@parcoil.com
+          </a>
+        </p>
       </div>
     </footer>
   );
