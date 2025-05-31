@@ -42,6 +42,7 @@ function page() {
       description: "A Windows toolbox for optimization.",
       repo: "https://github.com/Parcoil/Sparkle",
       download: "/sparkle",
+      site: "/sparkle",
       image: "✨",
     },
   ];

@@ -73,7 +73,7 @@ function Navbar() {
                             <LockKeyhole className="h-4 w-4 mr-2" />
                             Password Generator
                           </div>
-                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          <p className="line-clamp-2 text-sm leading-snug ">
                             Create secure, customizable passwords
                           </p>
                         </a>
@@ -87,7 +87,7 @@ function Navbar() {
                             <File className="h-4 w-4 mr-2" />
                             Base64 Encode/Decode
                           </div>
-                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          <p className="line-clamp-2 text-sm leading-snug ">
                             Simple Base64 tool
                           </p>
                         </a>
@@ -101,7 +101,7 @@ function Navbar() {
                             <Globe className="h-4 w-4 mr-2" />
                             IP Info
                           </div>
-                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          <p className="line-clamp-2 text-sm leading-snug ">
                             Simple IP Tool
                           </p>
                         </a>
@@ -125,7 +125,7 @@ function Navbar() {
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                   <Button variant="ghost" asChild>
-                    <a href="/sparkle">✨ Sparkle</a>
+                    <a href="/sparkle">Sparkle</a>
                   </Button>
                 </NavigationMenuItem>
                 {/* <NavigationMenuItem>
