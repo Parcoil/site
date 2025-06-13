@@ -19,7 +19,7 @@ export const metadata = {
     url: "https://parcoil.com/sparkle",
     images: [
       {
-        url: "/sparkleimage.png",
+        url: "/sparklebanner.png",
         width: 1200,
         height: 630,
         alt: "Sparkle Windows Optimization Tool",
@@ -31,11 +31,18 @@ export const metadata = {
     title: "Sparkle - Windows Optimization Made Easy",
     description:
       "Boost your PC performance with Sparkle, the free Windows optimization tool from Parcoil",
-    images: ["/sparkleimage.png"],
+    images: ["/sparklebanner.png"],
   },
   canonical: "https://parcoil.com/sparkle",
 };
-
+async function checkUrlExists(url) {
+  try {
+    const res = await fetch(url, { method: "HEAD" });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
 async function getLatestRelease() {
   try {
     const res = await fetch(
@@ -49,17 +56,32 @@ async function getLatestRelease() {
       asset.name.endsWith("-setup.exe")
     );
 
+    if (setupAsset) {
+      const urlExists = await checkUrlExists(setupAsset.browser_download_url);
+      if (urlExists) {
+        return {
+          version: release.tag_name,
+          downloadUrl: setupAsset.browser_download_url,
+          downloadName: setupAsset.name,
+          fallbackUrl: "https://github.com/Parcoil/Sparkle/releases/latest",
+        };
+      }
+    }
+
+    // Fallback if asset missing or URL invalid
     return {
       version: release.tag_name,
-      downloadUrl: setupAsset?.browser_download_url ?? null,
-      downloadName: setupAsset?.name ?? null,
+      downloadUrl: "https://github.com/Parcoil/Sparkle/releases/latest",
+      downloadName: null,
+      fallbackUrl: "https://github.com/Parcoil/Sparkle/releases/latest",
     };
   } catch (error) {
     console.error("Error fetching latest release:", error);
     return {
       version: null,
-      downloadUrl: null,
+      downloadUrl: "https://github.com/Parcoil/Sparkle/releases/latest",
       downloadName: null,
+      fallbackUrl: "https://github.com/Parcoil/Sparkle/releases/latest",
     };
   }
 }
