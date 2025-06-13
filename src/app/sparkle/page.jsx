@@ -36,7 +36,37 @@ export const metadata = {
   canonical: "https://parcoil.com/sparkle",
 };
 
-export default function Page() {
+async function getLatestRelease() {
+  try {
+    const res = await fetch(
+      "https://api.github.com/repos/Parcoil/Sparkle/releases/latest",
+      { next: { revalidate: 60 } }
+    );
+    if (!res.ok) throw new Error("Failed to fetch latest release");
+    const release = await res.json();
+
+    const setupAsset = release.assets.find((asset) =>
+      asset.name.endsWith("-setup.exe")
+    );
+
+    return {
+      version: release.tag_name,
+      downloadUrl: setupAsset?.browser_download_url ?? null,
+      downloadName: setupAsset?.name ?? null,
+    };
+  } catch (error) {
+    console.error("Error fetching latest release:", error);
+    return {
+      version: null,
+      downloadUrl: null,
+      downloadName: null,
+    };
+  }
+}
+
+export default async function Page() {
+  const { version, downloadUrl, downloadName } = await getLatestRelease();
+
   const features = [
     {
       icon: <LayoutGrid className="text-green-500" />,
@@ -73,19 +103,46 @@ export default function Page() {
           <h1 className="text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-[#0096ff] to-[#0042ff] bg-clip-text text-transparent">
             Sparkle
           </h1>
-          <p className="text-lg md:text-xl text-black dark:text-gray-300 mb-8">
+          <p className="text-lg md:text-xl text-black dark:text-gray-300 mb-4">
             The ultimate tool to optimize Windows and boost gaming performance
           </p>
 
+          <div className="mb-4">
+            {version ? (
+              <p className="text-sm text-gray-300 mb-2">
+                Latest Version:{" "}
+                <a href="https://github.com/Parcoil/Sparkle">
+                  <strong className="text-[#0096ff]">{version}</strong>
+                </a>
+              </p>
+            ) : (
+              <p className="text-sm text-gray-400 mb-2">
+                Loading latest version...
+              </p>
+            )}
+          </div>
+
           <div className="flex flex-wrap gap-4 justify-center mb-12">
-            <Link href="https://github.com/Parcoil/Sparkle/releases/latest">
-              <Button
-                size="lg"
-                className="bg-[#0096ff] hover:bg-blue-600 text-black"
+            {downloadUrl ? (
+              <a
+                href={downloadUrl}
+                download={downloadName}
+                target="_blank"
+                rel="noopener noreferrer"
               >
+                <Button
+                  size="lg"
+                  className="bg-[#0096ff] hover:bg-blue-600 text-black"
+                >
+                  <Download className="mr-2 h-5 w-5" /> Download Latest
+                </Button>
+              </a>
+            ) : (
+              <Button size="lg" disabled>
                 <Download className="mr-2 h-5 w-5" /> Download Latest
               </Button>
-            </Link>
+            )}
+
             <Link href="https://github.com/Parcoil/Sparkle">
               <Button
                 variant="outline"
@@ -131,14 +188,25 @@ export default function Page() {
             Download Sparkle today and give your Windows PC the performance it
             deserves.
           </p>
-          <Link href="https://github.com/Parcoil/Sparkle/releases/latest">
-            <Button
-              size="lg"
-              className="bg-[#0096ff] hover:bg-blue-600 text-black"
+          {downloadUrl ? (
+            <a
+              href={downloadUrl}
+              download={downloadName}
+              target="_blank"
+              rel="noopener noreferrer"
             >
+              <Button
+                size="lg"
+                className="bg-[#0096ff] hover:bg-blue-600 text-black"
+              >
+                <Download className="mr-2 h-5 w-5" /> Get Sparkle Now
+              </Button>
+            </a>
+          ) : (
+            <Button size="lg" disabled>
               <Download className="mr-2 h-5 w-5" /> Get Sparkle Now
             </Button>
-          </Link>
+          )}
         </div>
         <p className="text-muted-foreground/50 text-center mt-5">
           Supports Windows 11/10. (Tested on Windows 11)
