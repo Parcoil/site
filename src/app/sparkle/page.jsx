@@ -5,6 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AlertCircle, Download, Github, Trash2, Zap } from "lucide-react";
 import { LayoutGrid } from "lucide-react";
 
+export const runtime = "edge";
+
 export const metadata = {
   title: "Sparkle | Windows Optimization Tool by Parcoil",
   description:
