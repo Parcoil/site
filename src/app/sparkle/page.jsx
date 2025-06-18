@@ -47,7 +47,7 @@ async function getLatestRelease() {
   try {
     const res = await fetch(
       "https://api.github.com/repos/Parcoil/Sparkle/releases/latest",
-      { next: { revalidate: 60 } }
+      { cache: "no-store" }
     );
     if (!res.ok) throw new Error("Failed to fetch latest release");
     const release = await res.json();
@@ -68,7 +68,6 @@ async function getLatestRelease() {
       }
     }
 
-    // Fallback if asset missing or URL invalid
     return {
       version: release.tag_name,
       downloadUrl: "https://github.com/Parcoil/Sparkle/releases/latest",
