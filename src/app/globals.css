@@ -105,6 +105,26 @@
     0px 8px 10px -1px hsl(240 30% 25% / 0.12);
   --shadow-2xl: 0px 4px 6px 0px hsl(240 30% 25% / 0.3);
 }
+@keyframes scroll-marquee {
+  0% {
+    transform: translateX(1%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-container {
+  overflow: hidden;
+  position: relative;
+}
+
+.marquee-track {
+  display: flex;
+  gap: 1.5rem;
+  animation: scroll-marquee 20s linear infinite;
+  will-change: transform;
+}
 
 /* @layer base {
   :root {

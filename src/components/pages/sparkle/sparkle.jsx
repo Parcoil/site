@@ -11,7 +11,9 @@ import {
   Trash2,
   Zap,
   LayoutGrid,
+  Globe,
 } from "lucide-react";
+import { AsteriskSquare } from "lucide-react";
 
 async function getLatestRelease() {
   try {
@@ -44,27 +46,22 @@ export default function SparkleClient() {
   const [version, setVersion] = useState(null);
   const [downloadUrl, setDownloadUrl] = useState("");
   const [downloadName, setDownloadName] = useState(null);
-
-  useEffect(() => {
-    getLatestRelease().then((data) => {
-      setVersion(data.version);
-      setDownloadUrl(data.downloadUrl);
-      setDownloadName(data.downloadName);
-    });
-  }, []);
+  const [apps, setApps] = useState([]);
 
   const features = [
     {
       icon: <LayoutGrid className="text-green-500" />,
       title: "Debloat Windows",
       description:
-        "A tweak that runs a script to remove unnecessary apps and services.",
+        "Removes Unnecessary Windows Features And Apps (RECOMMENDED)",
+      categories: ["Performance", "Privacy"],
     },
     {
       icon: <Zap className="text-[#0096ff]" />,
-      title: "Boost Performance",
+      title: "System Optimization",
       description:
-        "Use tweaks to enhance system performance and responsiveness.",
+        "Enhance system performance and responsiveness with recommended tweaks.",
+      categories: ["Performance"],
     },
     {
       icon: <Trash2 className="text-red-500" />,
@@ -77,7 +74,26 @@ export default function SparkleClient() {
       description:
         "All changes can be undone with backups, disabling the tweak, or changing system settings.",
     },
+    {
+      icon: <AsteriskSquare className="text-purple-400" />,
+      title: "Built-in App Installer",
+      description: "Sparkle has a winget powered app installer built in!",
+    },
   ];
+
+  useEffect(() => {
+    getLatestRelease().then((data) => {
+      setVersion(data.version);
+      setDownloadUrl(data.downloadUrl);
+      setDownloadName(data.downloadName);
+    });
+
+    fetch(
+      "https://raw.githubusercontent.com/Parcoil/Sparkle/refs/heads/v2/src/renderer/src/assets/apps.json"
+    )
+      .then((res) => res.json())
+      .then((data) => setApps(data.apps ?? []));
+  }, []);
 
   return (
     <div className="min-h-screen text-white">
@@ -93,23 +109,17 @@ export default function SparkleClient() {
             The ultimate tool to optimize Windows and boost gaming performance
           </p>
 
-          <div className="mb-4">
-            {version ? (
-              <p className="text-sm text-gray-300 mb-2">
-                Latest Version:{" "}
-                <a href="https://github.com/Parcoil/Sparkle">
-                  <strong className="text-[#0096ff]">{version}</strong>
-                </a>
-              </p>
-            ) : (
-              <p className="text-sm text-gray-400 mb-2">
-                Loading latest version...
-              </p>
-            )}
-          </div>
+          {version && (
+            <p className="text-sm text-muted-foreground mb-2">
+              Latest Version:{" "}
+              <a href="https://github.com/Parcoil/Sparkle">
+                <strong className="text-[#0096ff]">{version}</strong>
+              </a>
+            </p>
+          )}
 
           <div className="flex flex-wrap gap-4 justify-center mb-12">
-            {downloadUrl ? (
+            {downloadUrl && (
               <a
                 href={downloadUrl}
                 download={downloadName}
@@ -123,16 +133,7 @@ export default function SparkleClient() {
                   <Download className="mr-2 h-5 w-5" /> Download Latest
                 </Button>
               </a>
-            ) : (
-              <Button
-                size="lg"
-                disabled
-                className="bg-[#0096ff] hover:bg-blue-600"
-              >
-                <Download className="mr-2 h-5 w-5" /> Download Latest
-              </Button>
             )}
-
             <Link href="https://github.com/Parcoil/Sparkle">
               <Button
                 variant="outline"
@@ -149,11 +150,14 @@ export default function SparkleClient() {
           <h2 className="text-3xl md:text-4xl font-bold text-center text-[#0096ff] mb-8">
             Features
           </h2>
+          <p className="text-center text-muted-foreground mb-8">
+            Powerful optimizations to enhance your Windows experience
+          </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {features.map((feature, i) => (
               <Card
                 key={i}
-                className="hover:border-[#0096ff] transition-all duration-300"
+                className="hover:border-[#0096ff] transition-all duration-300 last:justify-center last:items-center   "
               >
                 <CardHeader className="pb-2">
                   <div className="flex items-center gap-3">
@@ -169,15 +173,60 @@ export default function SparkleClient() {
           </div>
         </div>
 
+        <div className="mb-20">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-[#0096ff] mb-8">
+            Installable Apps
+          </h2>
+          <p className="text-center text-muted-foreground mb-8">
+            Easily install popular apps with Sparkle
+          </p>
+          <div className="marquee-container relative overflow-hidden">
+            <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent dark:from-background z-10 pointer-events-none"></div>
+
+            <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent dark:from-background z-10 pointer-events-none"></div>
+            <div className="marquee-track">
+              {[...apps, ...apps]
+                .sort(() => Math.random() - 0.5)
+                .map((app, i) => (
+                  <Card
+                    key={i}
+                    className="w-[280px] shrink-0 hover:border-[#0096ff] transition-all duration-300"
+                  >
+                    <CardHeader className="pb-2">
+                      <div className="flex items-center gap-3">
+                        <img src={app.icon} alt="" className="w-8 h-8" />
+                        <CardTitle className="text-lg">{app.name}</CardTitle>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="dark:text-gray-300 text-sm">
+                      <p>{app.info}</p>
+                      {app.link && (
+                        <a
+                          href={app.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center mt-2 text-blue-400 hover:underline"
+                        >
+                          <Globe className="w-4 h-4 mr-1" />
+                          Visit Site
+                        </a>
+                      )}
+                    </CardContent>
+                  </Card>
+                ))}
+            </div>
+          </div>
+        </div>
+
         <div className="text-center">
           <h2 className="text-3xl font-bold mb-4 text-foreground">
             Ready to Optimize?
           </h2>
-          <p className="mb-6 text-muted-foreground ">
+          <p className="mb-6 text-muted-foreground">
             Download Sparkle today and give your Windows PC the performance it
             deserves.
           </p>
-          {downloadUrl ? (
+          {downloadUrl && (
             <a
               href={downloadUrl}
               download={downloadName}
@@ -191,23 +240,19 @@ export default function SparkleClient() {
                 <Download className="mr-2 h-5 w-5" /> Get Sparkle Now
               </Button>
             </a>
-          ) : (
-            <Button size="lg" disabled>
-              <Download className="mr-2 h-5 w-5" /> Get Sparkle Now
-            </Button>
           )}
         </div>
-        <p className="text-muted-foreground/50 text-center mt-5">
-          Supports Windows 11/10. (Tested on Windows 11)
+
+        <p className="text-sm text-orange-400 mt-10 text-center font-medium">
+          ⚠️ Currently in Beta - Please report any issues on{" "}
+          <a
+            href="https://github.com/parcoil/sparkle"
+            className="text-blue-500"
+          >
+            GitHub
+          </a>
         </p>
       </div>
-
-      <p className="text-sm md:text-base text-orange-500 dark:text-orange-400 mb-8 font-medium text-center">
-        ⚠️ Currently in Beta - Please report any issues on{" "}
-        <a href="https://github.com/parcoil/sparkle" className="text-blue-500">
-          GitHub
-        </a>
-      </p>
     </div>
   );
 }
