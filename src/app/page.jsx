@@ -13,7 +13,12 @@ function Page() {
       <main className="flex-grow flex flex-col items-center justify-center text-center px-4">
         <div className="max-w-3xl mx-auto">
           <div className="items-center justify-center flex">
-            <Image src="/parcoil.png" width={100} height={100}></Image>
+            <Image
+              src="/parcoil.png"
+              width={100}
+              height={100}
+              alt="Parcoil Logo"
+            ></Image>
           </div>
           <h1 className="text-5xl font-extrabold dark:text-white mb-6">
             Welcome to Parcoil

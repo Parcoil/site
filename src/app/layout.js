@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import { ThemeProvider } from "next-themes";
 import Footer from "@/components/Footer";
 import { Toaster } from "@/components/ui/sonner";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 export const metadata = {
   title: "Parcoil",
@@ -32,6 +33,7 @@ export default function RootLayout({ children, hideNavbar = false }) {
           <Footer />
         </ThemeProvider>
       </body>
+      <GoogleAnalytics gaId="G-FQ8PQ7DD0P" />
     </html>
   );
 }
