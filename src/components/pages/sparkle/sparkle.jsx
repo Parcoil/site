@@ -20,6 +20,8 @@ import {
   Globe,
   AsteriskSquare,
   ChevronDown,
+  Box,
+  Copy,
 } from "lucide-react";
 import { sendGTMEvent } from "@next/third-parties/google";
 import {
@@ -29,7 +31,7 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import Image from "next/image";
-import { ReactLenis, useLenis } from "lenis/react";
+import { ReactLenis } from "lenis/react";
 
 async function getLatestRelease() {
   try {
@@ -74,11 +76,7 @@ export default function SparkleClient() {
   const [portableName, setPortableName] = useState(null);
   const [loading, setLoading] = useState(true);
   const [apps, setApps] = useState([]);
-
-  const lenis = useLenis((lenis) => {
-    // called every scroll
-    console.log(lenis);
-  });
+  const [copySuccess, setCopySuccess] = useState(false); // <-- Add state for copy feedback
 
   const features = [
     {
@@ -91,8 +89,7 @@ export default function SparkleClient() {
     {
       icon: <Zap className="text-[#0096ff]" />,
       title: "System Optimization",
-      description:
-        "Enhance system performance and responsiveness with recommended tweaks.",
+      description: "Enhance system performance and responsiveness with tweaks.",
       categories: ["Performance"],
     },
     {
@@ -104,14 +101,28 @@ export default function SparkleClient() {
       icon: <AlertCircle className="text-orange-400" />,
       title: "Safe & Reversible",
       description:
-        "All changes can be undone with backups, disabling the tweak, or changing system settings.",
+        "All changes can be undone with restore points, disabling the tweak, or changing system settings.",
     },
     {
       icon: <AsteriskSquare className="text-primary" />,
       title: "Built-in App Installer",
       description: "Sparkle has a winget powered app installer built in!",
     },
+    {
+      icon: <Box className="text-cyan-500" />,
+      title: "Utilities Page",
+      description: "Run System File Checker (SFC), Check Disk, DSIM from a GUI",
+    },
   ];
+
+  const powershellScript =
+    "irm https://raw.githubusercontent.com/Parcoil/Sparkle/v2/get.ps1 | iex";
+
+  const handleCopyScript = () => {
+    navigator.clipboard.writeText(powershellScript);
+    setCopySuccess(true);
+    setTimeout(() => setCopySuccess(false), 2000);
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -135,7 +146,7 @@ export default function SparkleClient() {
     <div className="min-h-screen text-white">
       <ReactLenis root />
       <div className="container mx-auto px-4 py-12 max-w-5xl">
-        <div className="text-center mb-16">
+        <div className="text-center ">
           <div className="flex justify-center mb-4">
             <Image
               className="mb-4"
@@ -150,7 +161,6 @@ export default function SparkleClient() {
           <p className="text-lg md:text-xl text-black dark:text-gray-300 mb-4">
             The ultimate tool to optimize Windows and boost gaming performance
           </p>
-
           {version && (
             <p className="text-sm text-muted-foreground mb-2">
               Latest Version:{" "}
@@ -159,8 +169,7 @@ export default function SparkleClient() {
               </a>
             </p>
           )}
-
-          <div className="flex flex-wrap gap-4 justify-center mb-12">
+          <div className="flex flex-wrap gap-4 justify-center">
             {loading ? (
               <Button
                 disabled
@@ -234,7 +243,28 @@ export default function SparkleClient() {
             </Link>
           </div>
         </div>
-
+        <div className="flex flex-col items-center mb-8 mt-6">
+          <div className="relative w-[700px] ">
+            <pre className="overflow-x-auto whitespace-nowrap rounded-[--radius] bg-muted p-3 text-sm font-mono select-all pr-12 text-secondary-foreground">
+              {powershellScript}
+            </pre>
+            <Button
+              size="icon"
+              variant="ghost"
+              className="absolute top-1 right-2"
+              onClick={handleCopyScript}
+              aria-label="Copy PowerShell script"
+              title={copySuccess ? "Copied!" : "Copy to clipboard"}
+            >
+              <Copy className="h-4 w-4 text-secondary-foreground" />
+            </Button>
+            {copySuccess && (
+              <span className="absolute top-2 right-12 text-green-500 text-xs font-semibold">
+                Copied!
+              </span>
+            )}
+          </div>
+        </div>
         <img
           src="https://raw.githubusercontent.com/Parcoil/Sparkle/refs/heads/v2/images/appshowcase.png"
           className="w-full max-w-3xl mx-auto mb-12 rounded-sm shadow-lg hover:scale-105 transition-transform duration-300"
