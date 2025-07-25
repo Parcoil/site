@@ -76,7 +76,7 @@ export default function SparkleClient() {
   const [portableName, setPortableName] = useState(null);
   const [loading, setLoading] = useState(true);
   const [apps, setApps] = useState([]);
-  const [copySuccess, setCopySuccess] = useState(false); // <-- Add state for copy feedback
+  const [copySuccess, setCopySuccess] = useState(false);
 
   const features = [
     {
@@ -151,6 +151,7 @@ export default function SparkleClient() {
             <Image
               className="mb-4"
               src="/sparklelogo.png"
+              alt="Sparkle Logo"
               width={100}
               height={100}
             />

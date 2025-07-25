@@ -17,7 +17,7 @@ export const metadata = {
 const inter = Inter({ subsets: ["latin"] });
 export default function RootLayout({ children, hideNavbar = false }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <link rel="icon" href="/parcoil.png" sizes="any" />
 
       <body className={`${inter.className} antialiased`}>
