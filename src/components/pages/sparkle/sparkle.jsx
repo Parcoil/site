@@ -23,7 +23,7 @@ import {
   Box,
   Copy,
 } from "lucide-react";
-import { sendGTMEvent } from "@next/third-parties/google";
+import { sendGAEvent } from "@next/third-parties/google";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -196,11 +196,8 @@ export default function SparkleClient() {
                     <a
                       href={downloadUrl}
                       onClick={() =>
-                        sendGTMEvent({
-                          event: "sparkle_download_button",
-                          value: "clicked",
-                          label: "homepage_button_exe",
-                          app_version: version ?? "unknown",
+                        sendGAEvent("event", "sparkle_download_button", {
+                          value: "homepage_button_exe",
                         })
                       }
                       download={downloadName}
@@ -215,11 +212,8 @@ export default function SparkleClient() {
                       <a
                         href={portableUrl}
                         onClick={() =>
-                          sendGTMEvent({
-                            event: "sparkle_download_button",
-                            value: "clicked",
-                            label: "homepage_button_zip",
-                            app_version: version ?? "unknown",
+                          sendGAEvent("event", "sparkle_download_button", {
+                            value: "homepage_button_zip",
                           })
                         }
                         download={portableName}
