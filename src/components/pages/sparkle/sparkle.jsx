@@ -32,6 +32,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Image from "next/image";
 import { ReactLenis } from "lenis/react";
+import posthog from "posthog-js";
 
 async function getLatestRelease() {
   try {
@@ -195,11 +196,15 @@ export default function SparkleClient() {
                   <DropdownMenuItem asChild>
                     <a
                       href={downloadUrl}
-                      onClick={() =>
+                      onClick={() => {
+                        posthog.capture("sparkle_download_button", {
+                          download_type: "exe",
+                        });
                         sendGAEvent("event", "sparkle_download_button", {
                           value: "homepage_button_exe",
-                        })
-                      }
+                          app_version: version ?? "unknown",
+                        });
+                      }}
                       download={downloadName}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -211,11 +216,15 @@ export default function SparkleClient() {
                     <DropdownMenuItem asChild>
                       <a
                         href={portableUrl}
-                        onClick={() =>
+                        onClick={() => {
+                          posthog.capture("sparkle_download_button", {
+                            download_type: "zip",
+                            app_version: version ?? "unknown",
+                          });
                           sendGAEvent("event", "sparkle_download_button", {
                             value: "homepage_button_zip",
-                          })
-                        }
+                          });
+                        }}
                         download={portableName}
                         target="_blank"
                         rel="noopener noreferrer"

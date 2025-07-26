@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import posthog from "posthog-js";
 
 function Pixel() {
   const colors = [
@@ -50,6 +51,7 @@ function Pixel() {
     if (!isFullScreen) {
       enterFullScreen();
     }
+    posthog.capture("pixel_test_started");
   };
 
   const handleLeftClick = () => {

@@ -3,6 +3,8 @@ import React from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import posthog from "posthog-js";
+
 function Base() {
   const [input, setInput] = React.useState("");
   const [output, setOutput] = React.useState("");
@@ -12,6 +14,7 @@ function Base() {
       setOutput(btoa(input));
     } catch (error) {
       setOutput("Invalid base64 string");
+      posthog.capture("base64_encode_error");
     }
   };
   const handleDecode = () => {

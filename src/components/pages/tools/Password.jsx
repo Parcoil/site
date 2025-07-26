@@ -13,6 +13,7 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Copy, RefreshCw, Shield } from "lucide-react";
+import posthog from "posthog-js";
 
 export default function PasswordGenerator() {
   const [password, setPassword] = useState("");
@@ -80,6 +81,12 @@ export default function PasswordGenerator() {
     }
 
     setPassword(generatedPassword);
+    posthog.capture("password_generated", {
+      length,
+      hasNumbers,
+      hasSymbols,
+      hasUppercase,
+    });
   };
 
   const calculatePasswordStrength = () => {
@@ -137,6 +144,7 @@ export default function PasswordGenerator() {
     navigator.clipboard.writeText(password);
     setCopySuccess(true);
     setTimeout(() => setCopySuccess(false), 2000);
+    posthog.capture("password_copied", { length });
   };
 
   return (

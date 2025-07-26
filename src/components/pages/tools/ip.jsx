@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Spinner } from "@/components/ui/spinner";
+import posthog from "posthog-js";
 
 export default function IPInfoCard() {
   const [ipinfo, setIpinfo] = useState(null);
@@ -28,6 +29,7 @@ export default function IPInfoCard() {
     if (!ipinfo?.ip) return;
     navigator.clipboard.writeText(ipinfo.ip);
     toast("IP Copied to clipboard");
+    posthog.capture("ip_copied");
   };
 
   if (!ipinfo) {
