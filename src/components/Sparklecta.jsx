@@ -15,9 +15,9 @@ function Sparklecta() {
         );
         if (!res.ok) throw new Error("Failed to fetch");
         const data = await res.json();
-        setVersion(data.tag_name || "v2");
+        setVersion(data.tag_name || "2");
       } catch {
-        setVersion("v2");
+        setVersion("2");
       }
     }
     fetchVersion();
