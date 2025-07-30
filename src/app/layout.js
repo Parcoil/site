@@ -35,7 +35,7 @@ export default function RootLayout({ children, hideNavbar = false }) {
           enableSystem
           disableTransitionOnChange
         >
-          <Toaster />
+          <Toaster    richColors/>
           {!hideNavbar && <Navbar />}
           {children}
           <Footer />

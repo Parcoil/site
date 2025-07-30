@@ -8,6 +8,9 @@ import {
 import { Globe } from "lucide-react";
 import { LockKeyhole } from "lucide-react";
 import { File } from "lucide-react";
+import { QrCode } from "lucide-react";
+import { Palette } from "lucide-react";
+import { Type } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 export const metadata = {
@@ -32,6 +35,24 @@ function page() {
       description: "Shows you IP related info",
       link: "/tools/ip",
       icon: <Globe size={28} className="" />,
+    },
+    {
+      name: "QR Code Generator",
+      description: "Create QR codes for URLs, text, or contact information",
+      link: "/tools/qr-code",
+      icon: <QrCode size={28} className="" />,
+    },
+    {
+      name: "Color Picker & Converter",
+      description: "Select and convert colors between different formats",
+      link: "/tools/color-picker",
+      icon: <Palette size={28} className="" />,
+    },
+    {
+      name: "Text Case Converter",
+      description: "Convert text between different cases",
+      link: "/tools/text-case-converter",
+      icon: <Type size={28} className="" />,
     },
   ];
 

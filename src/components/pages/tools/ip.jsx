@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Clipboard } from "lucide-react";
-import { toast, Toaster } from "sonner";
+import { toast } from "sonner";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";

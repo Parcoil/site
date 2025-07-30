@@ -21,6 +21,7 @@ import {
 import Link from "next/link";
 import { File } from "lucide-react";
 import { Globe } from "lucide-react";
+import Image from "next/image";
 
 function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -30,7 +31,8 @@ function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center h-16">
           <div className="w-48">
-            <Link className="text-2xl font-bold text-primary" href={"/"}>
+            <Link className="text-2xl font-bold hover:text-primary flex text-center items-center gap-2 transition-all" href={"/"}>
+              <Image src="/parcoil.png" alt="Parcoil" width="50" height="50" />
               Parcoil
             </Link>
           </div>
@@ -58,7 +60,7 @@ function Navbar() {
                               All Tools
                             </div>
                             <p className="text-sm leading-tight text-muted-foreground">
-                              Browse all of Parcoil's developer tools and
+                              Browse all of Parcoil's tools and
                               utilities.
                             </p>
                           </a>
