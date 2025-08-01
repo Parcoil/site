@@ -6,7 +6,6 @@ import {
   CardHeader,
   CardTitle,
   CardDescription,
-  CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,9 +23,7 @@ export default function ColorPicker() {
   const [savedColors, setSavedColors] = useState([]);
   const [activeTab, setActiveTab] = useState("hex");
 
-
   const hexToRgb = (hex) => {
- 
     hex = hex.replace(/^#/, "");
 
     // parse hex values
@@ -55,7 +52,9 @@ export default function ColorPicker() {
 
     const max = Math.max(r, g, b);
     const min = Math.min(r, g, b);
-    let h, s, l = (max + min) / 2;
+    let h,
+      s,
+      l = (max + min) / 2;
 
     if (max === min) {
       h = s = 0; // achromatic
@@ -64,9 +63,15 @@ export default function ColorPicker() {
       s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
 
       switch (max) {
-        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-        case g: h = (b - r) / d + 2; break;
-        case b: h = (r - g) / d + 4; break;
+        case r:
+          h = (g - b) / d + (g < b ? 6 : 0);
+          break;
+        case g:
+          h = (b - r) / d + 2;
+          break;
+        case b:
+          h = (r - g) / d + 4;
+          break;
       }
 
       h /= 6;
@@ -75,7 +80,7 @@ export default function ColorPicker() {
     return {
       h: Math.round(h * 360),
       s: Math.round(s * 100),
-      l: Math.round(l * 100)
+      l: Math.round(l * 100),
     };
   };
 
@@ -91,24 +96,24 @@ export default function ColorPicker() {
       const hue2rgb = (p, q, t) => {
         if (t < 0) t += 1;
         if (t > 1) t -= 1;
-        if (t < 1/6) return p + (q - p) * 6 * t;
-        if (t < 1/2) return q;
-        if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+        if (t < 1 / 6) return p + (q - p) * 6 * t;
+        if (t < 1 / 2) return q;
+        if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
         return p;
       };
 
       const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
       const p = 2 * l - q;
 
-      r = hue2rgb(p, q, h + 1/3);
+      r = hue2rgb(p, q, h + 1 / 3);
       g = hue2rgb(p, q, h);
-      b = hue2rgb(p, q, h - 1/3);
+      b = hue2rgb(p, q, h - 1 / 3);
     }
 
     return {
       r: Math.round(r * 255),
       g: Math.round(g * 255),
-      b: Math.round(b * 255)
+      b: Math.round(b * 255),
     };
   };
 
@@ -123,42 +128,38 @@ export default function ColorPicker() {
   }, [color]);
 
   useEffect(() => {
-    // Check if window is defined (client-side) before accessing localStorage
     if (typeof window !== "undefined") {
       try {
         const storedColors = localStorage.getItem("savedColors");
         if (storedColors) {
-          // Validate the stored data before setting state
           const parsedColors = JSON.parse(storedColors);
-          
-          // Check if parsedColors is an array
+
           if (Array.isArray(parsedColors)) {
-            // Validate each color object has the required properties
-            const validColors = parsedColors.filter(color => 
-              color && typeof color === 'object' && 
-              typeof color.hex === 'string' && 
-              color.hex.startsWith('#')
+            const validColors = parsedColors.filter(
+              (color) =>
+                color &&
+                typeof color === "object" &&
+                typeof color.hex === "string" &&
+                color.hex.startsWith("#")
             );
-            
+
             setSavedColors(validColors);
           } else {
-            // If not an array, reset to empty array
             setSavedColors([]);
-            // Clear invalid data
+
             localStorage.removeItem("savedColors");
           }
         }
       } catch (error) {
         console.error("Error loading saved colors:", error);
         toast.error("Failed to load saved colors");
-        // Clear potentially corrupted data
+
         localStorage.removeItem("savedColors");
       }
     }
   }, []);
 
   useEffect(() => {
-    // Only save to localStorage on the client-side
     if (typeof window !== "undefined" && savedColors.length > 0) {
       try {
         localStorage.setItem("savedColors", JSON.stringify(savedColors));
@@ -195,8 +196,7 @@ export default function ColorPicker() {
   };
 
   const saveColor = () => {
-    // Validate color format before saving
-    if (!color || typeof color !== 'string' || !color.startsWith('#')) {
+    if (!color || typeof color !== "string" || !color.startsWith("#")) {
       toast.error("Invalid color format");
       return;
     }
@@ -206,12 +206,12 @@ export default function ColorPicker() {
       return;
     }
 
-    if (!savedColors.some(c => c.hex === color)) {
+    if (!savedColors.some((c) => c.hex === color)) {
       try {
         const newColor = {
           hex: color,
           rgb: `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`,
-          hsl: `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`
+          hsl: `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`,
         };
         setSavedColors([...savedColors, newColor]);
         toast.success("Color saved!");
@@ -227,18 +227,16 @@ export default function ColorPicker() {
 
   const removeColor = (index) => {
     try {
-      // Validate index is within bounds
       if (index < 0 || index >= savedColors.length) {
         console.error("Invalid color index:", index);
         return;
       }
-      
+
       const newColors = [...savedColors];
       newColors.splice(index, 1);
       setSavedColors(newColors);
       toast.success("Color removed!");
-      
-      // If all colors are removed, consider clearing localStorage
+
       if (newColors.length === 0 && typeof window !== "undefined") {
         localStorage.removeItem("savedColors");
       }
@@ -250,29 +248,29 @@ export default function ColorPicker() {
 
   const exportPalette = () => {
     try {
-      // Check if there are colors to export
       if (savedColors.length === 0) {
         toast.error("No colors to export.");
         return;
       }
 
-      // Check if we're in a browser environment
       if (typeof window === "undefined" || !document) {
         toast.error("Export is only available in browser environments.");
         return;
       }
 
-      // Generate CSS variables
       let cssVariables = ":root {\n";
       savedColors.forEach((color, index) => {
-        // Validate color.hex before adding to CSS
-        if (color && color.hex && typeof color.hex === 'string' && color.hex.startsWith('#')) {
+        if (
+          color &&
+          color.hex &&
+          typeof color.hex === "string" &&
+          color.hex.startsWith("#")
+        ) {
           cssVariables += `  --color-${index + 1}: ${color.hex};\n`;
         }
       });
       cssVariables += "}";
 
-      // Create and download the file
       const blob = new Blob([cssVariables], { type: "text/css" });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
@@ -296,7 +294,9 @@ export default function ColorPicker() {
       <Toaster position="top-center" />
       <Card className="w-full max-w-lg mx-auto">
         <CardHeader>
-          <CardTitle className="text-center">Color Picker & Converter</CardTitle>
+          <CardTitle className="text-center">
+            Color Picker & Converter
+          </CardTitle>
           <CardDescription className="text-center">
             Select and convert colors between different formats
           </CardDescription>
@@ -317,7 +317,11 @@ export default function ColorPicker() {
             />
           </div>
 
-          <Tabs defaultValue="hex" value={activeTab} onValueChange={setActiveTab}>
+          <Tabs
+            defaultValue="hex"
+            value={activeTab}
+            onValueChange={setActiveTab}
+          >
             <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="hex">HEX</TabsTrigger>
               <TabsTrigger value="rgb">RGB</TabsTrigger>
@@ -376,10 +380,7 @@ export default function ColorPicker() {
                   />
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Input
-                    value={`rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`}
-                    readOnly
-                  />
+                  <Input value={`rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`} readOnly />
                   <Button
                     variant="outline"
                     size="icon"
@@ -458,7 +459,9 @@ export default function ColorPicker() {
 
           {savedColors.length > 0 && (
             <div className="space-y-4">
-              <h3 className="font-medium">Saved Colors ({savedColors.length}/10)</h3>
+              <h3 className="font-medium">
+                Saved Colors ({savedColors.length}/10)
+              </h3>
               <div className="grid grid-cols-5 gap-2">
                 {savedColors.map((savedColor, index) => (
                   <div key={index} className="relative group">
