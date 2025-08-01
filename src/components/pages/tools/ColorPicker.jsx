@@ -291,7 +291,6 @@ export default function ColorPicker() {
 
   return (
     <>
-      <Toaster position="top-center" />
       <Card className="w-full max-w-lg mx-auto">
         <CardHeader>
           <CardTitle className="text-center">
