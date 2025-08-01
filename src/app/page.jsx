@@ -36,7 +36,7 @@ function Page() {
             </div>
           </div>
 
-          <h1 className="text-6xl md:text-7xl font-extrabold mb-2 bg-primary bg-clip-text text-transparent">
+          <h1 className="text-6xl md:text-7xl font-extrabold mb-2 bg-primary bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent/60 dark:text-primary">
             Welcome to Parcoil
           </h1>
           {/* will most likely add back soon */}

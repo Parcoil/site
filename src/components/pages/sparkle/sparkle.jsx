@@ -33,6 +33,8 @@ import {
 import Image from "next/image";
 import { ReactLenis } from "lenis/react";
 import posthog from "posthog-js";
+import { TriangleAlert } from "lucide-react";
+import { toast } from "sonner";
 
 async function getLatestRelease() {
   try {
@@ -77,7 +79,6 @@ export default function SparkleClient() {
   const [portableName, setPortableName] = useState(null);
   const [loading, setLoading] = useState(true);
   const [apps, setApps] = useState([]);
-  const [copySuccess, setCopySuccess] = useState(false);
 
   const features = [
     {
@@ -128,8 +129,7 @@ export default function SparkleClient() {
 
   const handleCopyScript = () => {
     navigator.clipboard.writeText(powershellScript);
-    setCopySuccess(true);
-    setTimeout(() => setCopySuccess(false), 2000);
+    toast.success("Copied to clipboard");
   };
 
   useEffect(() => {
@@ -151,33 +151,35 @@ export default function SparkleClient() {
   }, []);
 
   return (
-    <div className="min-h-screen text-white">
+    <div className="min-h-screen">
       <ReactLenis root />
-      <div className="container mx-auto px-4 py-12 max-w-5xl">
-        <div className="text-center ">
-          <div className="flex justify-center mb-4">
+      <div className="container mx-auto px-4 py-12 max-w-6xl">
+        <div className="text-center">
+          <div className="flex justify-center mb-4 animate-bounce-slow">
             <Image
-              className="mb-4"
+              className=""
               src="/sparklelogo.png"
               alt="Sparkle Logo"
               width={100}
               height={100}
             />
           </div>
-          <h1 className="text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-[#0096ff] to-[#0042ff] bg-clip-text text-transparent">
+          <h1 className="text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-[#0096ff] to-[#0042ff] bg-clip-text text-transparent animate-gradient">
             Sparkle
           </h1>
           <p className="text-lg md:text-xl text-black dark:text-gray-300 mb-4">
             The ultimate tool to optimize Windows and boost gaming performance
           </p>
-          {version && (
-            <p className="text-sm text-muted-foreground mb-2">
-              Latest Version:{" "}
-              <a href="https://github.com/Parcoil/Sparkle">
-                <strong className="text-[#0096ff]">{version}</strong>
-              </a>
-            </p>
-          )}
+          <div className="flex items-center justify-center gap-4 mb-4">
+            {version && (
+              <p className="text-sm text-muted-foreground">
+                Latest Version:{" "}
+                <a href="https://github.com/Parcoil/Sparkle">
+                  <strong className="text-[#0096ff]">{version}</strong>
+                </a>
+              </p>
+            )}
+          </div>
           <div className="flex flex-wrap gap-4 justify-center">
             {loading ? (
               <Button
@@ -255,31 +257,32 @@ export default function SparkleClient() {
           </div>
         </div>
         <div className="flex flex-col items-center mb-8 mt-6">
-          <div className="relative w-[700px] ">
-            <pre className="overflow-x-auto whitespace-nowrap rounded-[--radius] bg-muted p-3 text-sm font-mono select-all pr-12 text-secondary-foreground">
-              {powershellScript}
-            </pre>
-            <Button
-              size="icon"
-              variant="ghost"
-              className="absolute top-1 right-2"
-              onClick={handleCopyScript}
-              aria-label="Copy PowerShell script"
-              title={copySuccess ? "Copied!" : "Copy to clipboard"}
-            >
-              <Copy className="h-4 w-4 text-secondary-foreground" />
-            </Button>
-            {copySuccess && (
-              <span className="absolute top-2 right-12 text-green-500 text-xs font-semibold">
-                Copied!
-              </span>
-            )}
+          <div className="relative w-full max-w-[700px]">
+            <div className="mb-2 text-sm text-muted-foreground text-center">
+              Quick Install via PowerShell:
+            </div>
+            <div className="relative">
+              <pre className="overflow-x-auto whitespace-nowrap rounded-[--radius] bg-muted p-3 text-sm font-mono select-all pr-12 text-secondary-foreground border border-[#0096ff]/20">
+                {powershellScript}
+              </pre>
+              <Button
+                size="icon"
+                variant="ghost"
+                className="absolute top-1/2 right-2 transform -translate-y-1/2"
+                onClick={handleCopyScript}
+                aria-label="Copy PowerShell script"
+                title={"Copy to clipboard"}
+              >
+                <Copy className="h-4 w-4 text-secondary-foreground" />
+              </Button>
+            </div>
           </div>
         </div>
+
         <img
           src="https://raw.githubusercontent.com/Parcoil/Sparkle/refs/heads/v2/images/appshowcase.png"
-          className="w-full max-w-3xl mx-auto mb-12 rounded-sm shadow-lg hover:scale-105 transition-transform duration-300"
-          alt=""
+          className="w-full max-w-3xl mx-auto rounded-lg shadow-lg transition-transform duration-300 hover:scale-105 mb-4"
+          alt="Sparkle application screenshot"
         />
 
         <div className="mb-20">
@@ -293,21 +296,33 @@ export default function SparkleClient() {
             {features.map((feature, i) => (
               <Card
                 key={i}
-                className="hover:border-[#0096ff] transition-all duration-300 last:justify-center last:items-center   "
+                className="hover:border-[#0096ff] hover:shadow-lg transition-all duration-300 group"
               >
                 <CardHeader className="pb-2">
                   <div className="flex items-center gap-3">
-                    {feature.icon}{" "}
-                    <CardTitle className="text-xl">{feature.title}</CardTitle>
-                    {feature.new && (
-                      <span className="text-white bg-red-500 pl-2 pr-2 rounded-full">
-                        New in v2.6.0
-                      </span>
-                    )}
+                    <div className="p-2 rounded-full bg-muted group-hover:bg-[#0096ff]/10 transition-colors">
+                      {feature.icon}
+                    </div>
+                    <div>
+                      <CardTitle className="text-xl flex items-center gap-2">
+                        {feature.title}
+                        {feature.new && (
+                          <span className="text-white bg-red-500 text-xs px-2 py-0.5 rounded-full">
+                            New in v2.6.0
+                          </span>
+                        )}
+                      </CardTitle>
+                      <CardDescription className="text-sm mt-1">
+                        {feature.categories?.join(" • ")}
+                      </CardDescription>
+                    </div>
                   </div>
                 </CardHeader>
                 <CardContent className="dark:text-gray-300">
-                  {feature.description}
+                  <p className="mb-2">{feature.description}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {feature.details}
+                  </p>
                 </CardContent>
               </Card>
             ))}
@@ -368,13 +383,12 @@ export default function SparkleClient() {
           </div>
         </div>
 
-        <div className="text-center">
+        <div className="text-center bg-gradient-to-r from-[#0096ff]/10 to-[#0042ff]/10 p-8 rounded-xl border border-[#0096ff]/20 mb-10">
           <h2 className="text-3xl font-bold mb-4 text-foreground">
-            Ready to Optimize?
+            Ready to Optimize Your Windows PC?
           </h2>
-          <p className="mb-6 text-muted-foreground">
-            Download Sparkle today and give your Windows PC the performance it
-            deserves.
+          <p className="mb-6 text-muted-foreground max-w-2xl mx-auto">
+            Download Sparkle and Debloat, Optimize, Clean your PC
           </p>
           {downloadUrl && (
             <a
@@ -382,10 +396,21 @@ export default function SparkleClient() {
               download={downloadName}
               target="_blank"
               rel="noopener noreferrer"
+              className="inline-block animate-pulse-slow"
+              onClick={() => {
+                posthog.capture("sparkle_download_button", {
+                  download_type: "exe",
+                  location: "bottom_cta",
+                });
+                sendGAEvent("event", "sparkle_download_button", {
+                  value: "bottom_cta_exe",
+                  app_version: version ?? "unknown",
+                });
+              }}
             >
               <Button
                 size="lg"
-                className="bg-[#0096ff] hover:bg-blue-600 text-black"
+                className="bg-[#0096ff] hover:bg-blue-600 text-black shadow-lg hover:shadow-xl transition-all duration-300"
               >
                 <Download className="mr-2 h-5 w-5" /> Get Sparkle Now
               </Button>
