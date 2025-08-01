@@ -123,13 +123,17 @@ export default function ColorPicker() {
   }, [color]);
 
   useEffect(() => {
-//  goofy nextjs
+    // Check if window is defined (client-side) before accessing localStorage
     if (typeof window !== "undefined") {
       try {
         const storedColors = localStorage.getItem("savedColors");
         if (storedColors) {
+          // Validate the stored data before setting state
           const parsedColors = JSON.parse(storedColors);
+          
+          // Check if parsedColors is an array
           if (Array.isArray(parsedColors)) {
+            // Validate each color object has the required properties
             const validColors = parsedColors.filter(color => 
               color && typeof color === 'object' && 
               typeof color.hex === 'string' && 
@@ -138,19 +142,23 @@ export default function ColorPicker() {
             
             setSavedColors(validColors);
           } else {
+            // If not an array, reset to empty array
             setSavedColors([]);
+            // Clear invalid data
             localStorage.removeItem("savedColors");
           }
         }
       } catch (error) {
         console.error("Error loading saved colors:", error);
         toast.error("Failed to load saved colors");
+        // Clear potentially corrupted data
         localStorage.removeItem("savedColors");
       }
     }
   }, []);
 
   useEffect(() => {
+    // Only save to localStorage on the client-side
     if (typeof window !== "undefined" && savedColors.length > 0) {
       try {
         localStorage.setItem("savedColors", JSON.stringify(savedColors));
@@ -187,6 +195,7 @@ export default function ColorPicker() {
   };
 
   const saveColor = () => {
+    // Validate color format before saving
     if (!color || typeof color !== 'string' || !color.startsWith('#')) {
       toast.error("Invalid color format");
       return;
@@ -218,6 +227,7 @@ export default function ColorPicker() {
 
   const removeColor = (index) => {
     try {
+      // Validate index is within bounds
       if (index < 0 || index >= savedColors.length) {
         console.error("Invalid color index:", index);
         return;
@@ -228,6 +238,7 @@ export default function ColorPicker() {
       setSavedColors(newColors);
       toast.success("Color removed!");
       
+      // If all colors are removed, consider clearing localStorage
       if (newColors.length === 0 && typeof window !== "undefined") {
         localStorage.removeItem("savedColors");
       }
@@ -239,24 +250,29 @@ export default function ColorPicker() {
 
   const exportPalette = () => {
     try {
+      // Check if there are colors to export
       if (savedColors.length === 0) {
         toast.error("No colors to export.");
         return;
       }
 
+      // Check if we're in a browser environment
       if (typeof window === "undefined" || !document) {
         toast.error("Export is only available in browser environments.");
         return;
       }
 
+      // Generate CSS variables
       let cssVariables = ":root {\n";
       savedColors.forEach((color, index) => {
+        // Validate color.hex before adding to CSS
         if (color && color.hex && typeof color.hex === 'string' && color.hex.startsWith('#')) {
           cssVariables += `  --color-${index + 1}: ${color.hex};\n`;
         }
       });
       cssVariables += "}";
 
+      // Create and download the file
       const blob = new Blob([cssVariables], { type: "text/css" });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
@@ -277,6 +293,7 @@ export default function ColorPicker() {
 
   return (
     <>
+      <Toaster position="top-center" />
       <Card className="w-full max-w-lg mx-auto">
         <CardHeader>
           <CardTitle className="text-center">Color Picker & Converter</CardTitle>

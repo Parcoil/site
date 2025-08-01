@@ -114,6 +114,13 @@ export default function SparkleClient() {
       title: "Utilities Page",
       description: "Run System File Checker (SFC), Check Disk, DSIM from a GUI",
     },
+    {
+      icon: <Globe className="text-yellow-500" />,
+      title: "DNS Changer",
+      new: true,
+      description:
+        "Change your DNS settings to improve internet speed and security.",
+    },
   ];
 
   const powershellScript =
@@ -290,8 +297,13 @@ export default function SparkleClient() {
               >
                 <CardHeader className="pb-2">
                   <div className="flex items-center gap-3">
-                    {feature.icon}
+                    {feature.icon}{" "}
                     <CardTitle className="text-xl">{feature.title}</CardTitle>
+                    {feature.new && (
+                      <span className="text-white bg-red-500 pl-2 pr-2 rounded-full">
+                        New in v2.6.0
+                      </span>
+                    )}
                   </div>
                 </CardHeader>
                 <CardContent className="dark:text-gray-300">
