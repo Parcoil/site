@@ -101,7 +101,7 @@ export default function PasswordGenerator() {
 
     let deductions = 0;
 
-    const charCounts = {};
+    const charCounts: Record<string, number> = {};
     for (const char of password) {
       charCounts[char] = (charCounts[char] || 0) + 1;
     }

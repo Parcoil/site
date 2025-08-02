@@ -10,8 +10,9 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import Sparklecta from "@/components/Sparklecta";
+import { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Home | Parcoil",
   description:
     "Open source software and tools by Parcoil. Explore our projects like Sparkle, Lunaar, Starlight, and more.",

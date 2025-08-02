@@ -28,7 +28,17 @@ const loaderVariants = cva("animate-spin text-primary", {
   },
 });
 
-export function Spinner({ size, show, children, className }) {
+export function Spinner({
+  size,
+  show,
+  children,
+  className,
+}: {
+  size?: "small" | "medium" | "large";
+  show: boolean;
+  children?: React.ReactNode;
+  className?: string;
+}) {
   return (
     <span className={spinnerVariants({ show })}>
       <Loader2 className={cn(loaderVariants({ size }), className)} />

@@ -31,6 +31,7 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import Image from "next/image";
+
 import { ReactLenis } from "lenis/react";
 import posthog from "posthog-js";
 import { TriangleAlert } from "lucide-react";
@@ -320,9 +321,6 @@ export default function SparkleClient() {
                 </CardHeader>
                 <CardContent className="dark:text-gray-300">
                   <p className="mb-2">{feature.description}</p>
-                  <p className="text-sm text-muted-foreground">
-                    {feature.details}
-                  </p>
                 </CardContent>
               </Card>
             ))}

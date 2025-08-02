@@ -36,7 +36,7 @@ export default function IPInfoCard() {
     return (
       <div className="flex mt-5 flex-col items-center justify-center text-center">
         <span className="text-4xl">
-          <Spinner />
+          <Spinner className="w-10 h-10" size={"large"} show={true} />
         </span>
       </div>
     );

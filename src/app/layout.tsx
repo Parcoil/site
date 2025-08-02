@@ -6,8 +6,9 @@ import Footer from "@/components/Footer";
 import { Toaster } from "@/components/ui/sonner";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import Script from "next/script";
+import { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Parcoil",
   description:
     "Creators of Lunaar and Starlight unblocked games, and Sparkle Windows optimizer. ",
@@ -16,7 +17,7 @@ export const metadata = {
   robots: "index, follow",
 };
 const inter = Inter({ subsets: ["latin"] });
-export default function RootLayout({ children, hideNavbar = false }) {
+export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <link rel="icon" href="/parcoil.png" sizes="any" />
@@ -25,7 +26,7 @@ export default function RootLayout({ children, hideNavbar = false }) {
           strategy="afterInteractive"
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1565760898646999"
-          crossorigin="anonymous"
+          crossOrigin="anonymous"
         ></Script>
       </head>
       <body className={`${inter.className} antialiased`}>
@@ -35,8 +36,8 @@ export default function RootLayout({ children, hideNavbar = false }) {
           enableSystem
           disableTransitionOnChange
         >
-          <Toaster    richColors/>
-          {!hideNavbar && <Navbar />}
+          <Toaster richColors />
+          <Navbar />
           {children}
           <Footer />
         </ThemeProvider>
