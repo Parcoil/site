@@ -22,6 +22,7 @@ import Link from "next/link";
 import { File } from "lucide-react";
 import { Globe } from "lucide-react";
 import Image from "next/image";
+import { Badge } from "./ui/badge";
 
 function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -128,6 +129,11 @@ function Navbar() {
                 <NavigationMenuItem>
                   <Button variant="ghost" asChild>
                     <a href="/sparkle">Sparkle</a>
+                  </Button>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <Button variant="ghost" asChild>
+                    <a href="/dotline">Dotline <Badge variant="default">NEW</Badge></a>
                   </Button>
                 </NavigationMenuItem>
                 {/* <NavigationMenuItem>
@@ -245,6 +251,9 @@ function Navbar() {
 
             <Button variant="ghost" className="w-full justify-start" asChild>
               <a href="/sparkle">Sparkle</a>
+            </Button>
+            <Button variant="ghost" className="w-full justify-start" asChild>
+              <a href="/dotline">Dotline <Badge variant="default">NEW</Badge></a>
             </Button>
             {/* <Button variant="ghost" className="w-full justify-start" asChild>
               <a href="/about">About</a>
