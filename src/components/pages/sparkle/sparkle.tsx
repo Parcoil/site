@@ -82,9 +82,14 @@ async function getTotalDownloads() {
 
     let totalDownloads = 0;
     releases.forEach((release) => {
-      release.assets.forEach((asset) => {
-        totalDownloads += asset.download_count || 0;
-      });
+      const version = release.tag_name;
+      if (version && version >= "2.0.0") {
+        release.assets.forEach((asset) => {
+          if (asset.name.endsWith(".exe") || asset.name.endsWith(".zip")) {
+            totalDownloads += asset.download_count || 0;
+          }
+        });
+      }
     });
 
     return totalDownloads;
