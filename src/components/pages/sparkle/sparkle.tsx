@@ -72,6 +72,27 @@ async function getLatestRelease() {
   }
 }
 
+async function getTotalDownloads() {
+  try {
+    const res = await fetch(
+      "https://api.github.com/repos/Parcoil/Sparkle/releases"
+    );
+    if (!res.ok) throw new Error("Failed to fetch releases");
+    const releases = await res.json();
+
+    let totalDownloads = 0;
+    releases.forEach((release) => {
+      release.assets.forEach((asset) => {
+        totalDownloads += asset.download_count || 0;
+      });
+    });
+
+    return totalDownloads;
+  } catch {
+    return null;
+  }
+}
+
 export default function SparkleClient() {
   const [version, setVersion] = useState(null);
   const [downloadUrl, setDownloadUrl] = useState("");
@@ -80,6 +101,7 @@ export default function SparkleClient() {
   const [portableName, setPortableName] = useState(null);
   const [loading, setLoading] = useState(true);
   const [apps, setApps] = useState([]);
+  const [totalDownloads, setTotalDownloads] = useState(null);
 
   const features = [
     {
@@ -144,6 +166,10 @@ export default function SparkleClient() {
       setLoading(false);
     });
 
+    getTotalDownloads().then((total) => {
+      setTotalDownloads(total);
+    });
+
     fetch(
       "https://raw.githubusercontent.com/Parcoil/Sparkle/refs/heads/v2/src/renderer/src/assets/apps.json"
     )
@@ -178,6 +204,14 @@ export default function SparkleClient() {
                 <a href="https://github.com/Parcoil/Sparkle">
                   <strong className="text-[#0096ff]">{version}</strong>
                 </a>
+              </p>
+            )}
+            {totalDownloads && (
+              <p className="text-sm text-muted-foreground">
+                Total Downloads:{" "}
+                <strong className="text-[#0096ff]">
+                  {totalDownloads.toLocaleString()}
+                </strong>
               </p>
             )}
           </div>
