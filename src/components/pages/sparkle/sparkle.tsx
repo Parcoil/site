@@ -179,7 +179,18 @@ export default function SparkleClient() {
       "https://raw.githubusercontent.com/Parcoil/Sparkle/refs/heads/v2/src/renderer/src/assets/apps.json"
     )
       .then((res) => res.json())
-      .then((data) => setApps(data.apps ?? []));
+      .then((data) => {
+        // Ensure we have a valid apps array
+        if (data && Array.isArray(data.apps)) {
+          setApps(data.apps);
+        } else {
+          setApps([]);
+        }
+      })
+      .catch((error) => {
+        console.error("Failed to fetch apps:", error);
+        setApps([]);
+      });
   }, []);
 
   return (

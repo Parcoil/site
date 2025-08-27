@@ -6,7 +6,7 @@ import Link from "next/link";
 
 function Sparklecta() {
   const [version, setVersion] = useState(null);
-  const [showDotline, setShowDotline] = useState(null); 
+  const [showDotline, setShowDotline] = useState(null);
 
   useEffect(() => {
     const showDotlineNow = Math.random() < 0.7;
@@ -34,7 +34,7 @@ function Sparklecta() {
   return (
     <div>
       <div className="mb-4">
-        <Link href={showDotline ? "/dotline" : "/sparkle"}>
+        <Link href={showDotline ? "/dotline" : "https://getsparkle.net"}>
           <Badge
             variant="outline"
             className="text-lg px-4 py-2 font-semibold rounded-full hover:bg-primary hover:text-primary-foreground transition-colors gap-2 cursor-pointer"

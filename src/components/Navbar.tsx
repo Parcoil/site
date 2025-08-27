@@ -32,7 +32,10 @@ function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center h-16">
           <div className="w-48">
-            <Link className="text-2xl font-bold hover:text-primary flex text-center items-center gap-2 transition-all" href={"/"}>
+            <Link
+              className="text-2xl font-bold hover:text-primary flex text-center items-center gap-2 transition-all"
+              href={"/"}
+            >
               <Image src="/parcoil.png" alt="Parcoil" width="50" height="50" />
               Parcoil
             </Link>
@@ -61,8 +64,7 @@ function Navbar() {
                               All Tools
                             </div>
                             <p className="text-sm leading-tight text-muted-foreground">
-                              Browse all of Parcoil's tools and
-                              utilities.
+                              Browse all of Parcoil's tools and utilities.
                             </p>
                           </a>
                         </NavigationMenuLink>
@@ -128,12 +130,14 @@ function Navbar() {
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                   <Button variant="ghost" asChild>
-                    <a href="/sparkle">Sparkle</a>
+                    <a href="https://getsparkle.net">Sparkle</a>
                   </Button>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                   <Button variant="ghost" asChild>
-                    <a href="/dotline">Dotline <Badge variant="default">NEW</Badge></a>
+                    <a href="/dotline">
+                      Dotline <Badge variant="default">NEW</Badge>
+                    </a>
                   </Button>
                 </NavigationMenuItem>
                 {/* <NavigationMenuItem>
@@ -250,10 +254,12 @@ function Navbar() {
             </div>
 
             <Button variant="ghost" className="w-full justify-start" asChild>
-              <a href="/sparkle">Sparkle</a>
+              <a href="https://getsparkle.net">Sparkle</a>
             </Button>
             <Button variant="ghost" className="w-full justify-start" asChild>
-              <a href="/dotline">Dotline <Badge variant="default">NEW</Badge></a>
+              <a href="/dotline">
+                Dotline <Badge variant="default">NEW</Badge>
+              </a>
             </Button>
             {/* <Button variant="ghost" className="w-full justify-start" asChild>
               <a href="/about">About</a>
